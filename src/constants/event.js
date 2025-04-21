@@ -1,0 +1,18 @@
+export const SOCKET_EVENTS = {
+  SETUP: "setup",
+  JOIN_CHAT: "joinChat",
+  LEAVE_CHAT: "leaveChat",
+  NEW_CHAT: "newChat",
+  TYPING: "typing",
+  STOP_TYPING: "stopTyping",
+  MARK_AS_SEEN: "markAsSeen",
+  MESSAGE_SEEN_UPDATE: "messageSeenUpdate",
+  DISCONNECT: "disconnect",
+  USER_STATUS_CHANGED: "userStatusChanged",
+  ONLINE_USERS: "onlineUsers",
+  USER_JOINED: "userJoined",
+  USER_LEFT: "userLeft",
+  MARK_MESSAGE_FOR_SEEN: "markMessage",
+  NEW_MESSAGE: "newMessage",
+  MESSAGE_RECEIVED: "messageReceived",
+};

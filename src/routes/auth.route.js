@@ -1,28 +1,19 @@
-import apiResponse from "../utils/apiResponse.js";
-import apiError from "../utils/apiError.js";
-import asyncHandler from "../utils/asyncHandler.js";
-import { User } from "../models/user.models.js";
+import Router from "express";
+import {
+  LoginUser,
+  LogoutUser,
+  RegisterUser,
+  ValidateCookie,
+} from "../controller/auth.controller.js";
+import { uploadProfile } from "../middleware/multer.middleware.js";
+import { verifyJwt } from "../middleware/auth.middleware.js";
 
-const loginOption = {
-  httpOnly: true,
-  secure: true,
-  sameSite: "None",
-  path: "/",
-  maxAge: 10 * 24 * 60 * 60 * 1000,
-};
-const logoutOptions = {
-  httpOnly: true,
-  secure: true,
-  sameSite: "None",
-  path: "/",
-};
+const router = Router();
 
-const generateUserToken = async (user_id) => {
-  try {
-    const user = await User.findById(user_id);
-    const token = user.generateToken();
-    return { token };
-  } catch (error) {
-    throw new apiError(500, "something went Wrong while genrate token");
-  }
-};
+router.post("/register", uploadProfile.single("avatar"), RegisterUser);
+router.post("/login", LoginUser);
+router.get("/verify-token", ValidateCookie);
+//protected routes
+router.post("/logout", verifyJwt, LogoutUser);
+
+export default router;

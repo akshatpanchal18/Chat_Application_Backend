@@ -1,4 +1,4 @@
-import moonges, { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
 
 const UserSchema = new Schema(
@@ -12,11 +12,19 @@ const UserSchema = new Schema(
       require: true,
       unique: true,
     },
+    statusText: {
+      type: String,
+      default: "Busy",
+    },
+    statusQuote: {
+      type: String,
+      default: "Believe in yourself",
+    },
     password: {
       type: String,
       required: true,
     },
-    profilePic: {
+    avatar: {
       type: String,
       default:
         "https://res.cloudinary.com/dg8cwbkdy/image/upload/v1742968540/ckur7y3lbqw0pozz1equ.avif",
@@ -25,9 +33,6 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    token: {
-      type: String,
-    },
   },
 
   {
@@ -35,7 +40,7 @@ const UserSchema = new Schema(
   }
 );
 
-userSchema.methods.generateToken = function () {
+UserSchema.methods.generateToken = function () {
   return jwt.sign(
     {
       _id: this._id,
@@ -47,4 +52,4 @@ userSchema.methods.generateToken = function () {
     }
   );
 };
-export const User = moonges.model("User", UserSchema);
+export const User = mongoose.model("User", UserSchema);
